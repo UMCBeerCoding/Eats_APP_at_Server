@@ -103,4 +103,14 @@ public class StoreProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public int checkUserExist(int userIdx) throws BaseException{
+        try{
+            System.out.println("프로바이더");
+            return storeDao.checkUserIdx(userIdx);
+        }
+        catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

@@ -67,8 +67,8 @@ public enum BaseResponseStatus {
     // 6000 : 필요시 만들어서 쓰세요
     GET_STORES_REC_TYPE(false, 5000, "타입을 확인해주세요."),
     GET_STORES_STORESIDX_EMPTY(false, 5001, "식당 idx를 넣어주세요"),
-    GET_STORES_EMPTY(false, 5002, "식당이 존재하지 않습니다.")
-    ;
+    GET_STORES_EMPTY(false, 5002, "식당이 존재하지 않습니다."),
+    GET_USER_EMPTY(false, 5003, "유저가 존재하지 않습니다.");
 
 
 

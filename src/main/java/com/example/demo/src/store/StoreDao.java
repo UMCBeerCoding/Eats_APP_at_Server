@@ -235,4 +235,13 @@ public class StoreDao {
                 int.class,
                 checkUserIdxParams);
     }
+
+
+    public int checkUserIdx(int userIdx) {
+        String checkUserIdxQuery = "select exists(select userIdx from User where userIdx = ? and status='T')"; // User Table에 해당 email 값을 갖는 유저 정보가 존재하는가?
+        int checkUserIdxParams = userIdx; // 해당(확인할) 이메일 값
+        return this.jdbcTemplate.queryForObject(checkUserIdxQuery,
+                int.class,
+                checkUserIdxParams);
+    }
 }

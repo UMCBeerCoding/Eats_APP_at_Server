@@ -163,6 +163,8 @@ public class StoreController {
 
             // 존재하는 사용자인지 확인
             int userIdx = jwtService.getUserIdx();
+            int userExist = storeProvider.checkUserExist(userIdx);
+            if (userExist == 0) return new BaseResponse<>(GET_USER_EMPTY);
             System.out.println(userIdx);
 
             GetStoreMenus getStoreMenus = storeProvider.getStoreMenus(userIdx, storeIdx);
