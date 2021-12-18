@@ -60,4 +60,14 @@ public class StoreProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public List<GetRecRes> getStoreRec() throws BaseException {
+        try {
+            List<GetRecRes> getStoreRecResult = storeDao.getStoreRec();
+
+            return getStoreRecResult;
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }
