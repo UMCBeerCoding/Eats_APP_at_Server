@@ -182,7 +182,7 @@ public class StoreDao {
     }
 
     // 식당 메뉴
-    public List<GetCatRes> getStoreMenuList(int storeIdx) {
+    public List<Menus> getStoreMenuList(int storeIdx) {
         String getUserQuery = "select Store.storeIdx, storeName, truncate((select avg(Review.rating) from Review where Review.storeIdx=Store.storeIdx), 1) as rating,\n" +
                 "       (select count(reviewIdx) from Review where Store.storeIdx=Review.storeIdx) as reviewNum,\n" +
                 "        case when (deliveryPrice=0)\n" +
@@ -192,15 +192,14 @@ public class StoreDao {
                 "from Store where storeCat=?;";
 
         return this.jdbcTemplate.query(getUserQuery,
-                (rs, rowNum) -> new GetCatRes(
-                        rs.getInt("storeIdx"),
-                        rs.getString("storeName"),
-                        rs.getFloat("rating"),
-                        rs.getInt("reviewNum"),
-                        "2.0km",
-                        rs.getString("deliveryTip"),
-                        rs.getString("deliveryTime"),
-                        getStoreImages(rs.getInt("storeIdx"))), typeN
-        ); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
+                (rs, rowNum) -> new Menus(
+                        rs.getInt("menuIdx"),
+                        rs.getString("menuName"),
+                        rs.getString("menuPrice"),
+                        rs.getString("menuDescription"),
+                        rs.getString("menuImage"),
+                        rs.getString("isMuchOrder"),
+                        rs.getString("isBestReview")), storeIdx
+        );
     }
 }
