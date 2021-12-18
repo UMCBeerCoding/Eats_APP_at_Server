@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
-import com.example.demo.config.user_100;
 import com.example.demo.src.user.model.*;
 import com.example.demo.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import java.util.List;
 
 
 import static com.example.demo.config.BaseResponseStatus.*;
-import static com.example.demo.config.user_100.POST_USERS_EMTY_PASS;
 import static com.example.demo.utils.ValidationRegex.isRegexEmail;
 
 @RestController // Rest API 또는 WebAPI를 개발하기 위한 어노테이션. @Controller + @ResponseBody 를 합친것.
@@ -72,15 +70,16 @@ public class UserController {
             return new BaseResponse<>(POST_USERS_EMTY_PASS);
         }
         if (postUserReq.getName() == null) {
-            return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
+            return new BaseResponse<>(POST_USERS_EMPTY_NAME);
         }
         if (postUserReq.getPhoneNum() == null) {
-            return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
+            return new BaseResponse<>(POST_USERS_EMTY_PHONE);
         }
         //이메일 정규표현: 입력받은 이메일이 email@domain.xxx와 같은 형식인지 검사합니다. 형식이 올바르지 않다면 에러 메시지를 보냅니다.
         if (!isRegexEmail(postUserReq.getEmail())) {
-            return new BaseResponse<>(POST_USERS_INVALID_EMAIL);
+            return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
         }
+
         try {
             PostUserRes postUserRes = userService.createUser(postUserReq);
             return new BaseResponse<>(postUserRes);
