@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
+import javax.transaction.Transactional;
+
 import static com.example.demo.config.BaseResponseStatus.*;
 
 /**
@@ -40,6 +42,7 @@ public class UserService {
     }
     // ******************************************************************************
     // 회원가입(POST)
+    @Transactional
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
         // 중복 확인: 해당 이메일을 가진 유저가 있는지 확인합니다. 중복될 경우, 에러 메시지를 보냅니다.
         if (userProvider.checkEmail(postUserReq.getEmail()) == 1) {
