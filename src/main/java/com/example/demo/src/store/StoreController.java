@@ -157,6 +157,11 @@ public class StoreController {
             System.out.println(storeIdx);
             if (storeIdx < 1) return new BaseResponse<>(GET_STORES_STORESIDX_EMPTY);
 
+            // 존재하는 가게인지 확인
+            int storeExist = storeProvider.checkStoreExist(storeIdx);
+            if (storeExist == 0) return new BaseResponse<>(GET_STORES_EMPTY);
+
+            // 존재하는 사용자인지 확인
             int userIdx = jwtService.getUserIdx();
             System.out.println(userIdx);
 

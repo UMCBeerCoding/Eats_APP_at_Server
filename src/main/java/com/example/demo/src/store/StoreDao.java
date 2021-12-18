@@ -227,4 +227,12 @@ public class StoreDao {
                         rs.getString("isBestReview")), catIdx
         );
     }
+
+    public int checkStoreIdx(int storeIDx) {
+        String checkUserIdxQuery = "select exists(select storeIdx from Store where storeIdx = ? and status='T')"; // User Table에 해당 email 값을 갖는 유저 정보가 존재하는가?
+        int checkUserIdxParams = storeIDx; // 해당(확인할) 이메일 값
+        return this.jdbcTemplate.queryForObject(checkUserIdxQuery,
+                int.class,
+                checkUserIdxParams);
+    }
 }
