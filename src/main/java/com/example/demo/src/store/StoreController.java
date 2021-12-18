@@ -49,5 +49,23 @@ public class StoreController {
 
     // ******************************************************************************
 
+    /**
+     * 모든 회원들의  조회 API
+     * [GET] /app/stores/categories
+     */
+    //Query String
+    @ResponseBody   // return되는 자바 객체를 JSON으로 바꿔서 HTTP body에 담는 어노테이션.
+    //  JSON은 HTTP 통신 시, 데이터를 주고받을 때 많이 쓰이는 데이터 포맷.
+    @GetMapping("/categories") // (GET) 127.0.0.1:9000/app/users
+    // GET 방식의 요청을 매핑하기 위한 어노테이션
+    public BaseResponse<GetStoreCatRes> getUsers() {
 
+        try {
+            // 식당 카테고리 리스트 불러오기
+            GetStoreCatRes getStoreCat = storeProvider.getStoreCat();
+            return new BaseResponse<>(getStoreCat);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 }

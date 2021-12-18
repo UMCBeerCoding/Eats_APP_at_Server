@@ -40,5 +40,12 @@ public class StoreProvider {
     // ******************************************************************************
 
 
-
+    public GetStoreCatRes getStoreCat() throws BaseException {
+        try {
+            GetStoreCatRes getStoreCat = storeDao.getStoreCat();
+            return getStoreCat;
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

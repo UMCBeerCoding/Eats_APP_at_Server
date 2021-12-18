@@ -54,5 +54,15 @@ public class StoreDao {
      * https://velog.io/@seculoper235/RowMapper%EC%97%90-%EB%8C%80%ED%95%B4 -> RowMapper에 대한 설명
      */
 
+    // 해당 userIdx를 갖는 유저조회
+    public GetStoreCatRes getStoreCat() {
+        String getUserQuery = "select * from Category"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
+
+        return this.jdbcTemplate.queryForObject(getUserQuery,
+                (rs, rowNum) -> new GetStoreCatRes(
+                        rs.getInt("catIdx"),
+                        rs.getString("catName"),
+                        rs.getString("catImage"))); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
+    }
 
 }
