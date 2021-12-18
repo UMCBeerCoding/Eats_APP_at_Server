@@ -58,12 +58,34 @@ public class StoreController {
     //  JSON은 HTTP 통신 시, 데이터를 주고받을 때 많이 쓰이는 데이터 포맷.
     @GetMapping("/categories") // (GET) 127.0.0.1:9000/app/users
     // GET 방식의 요청을 매핑하기 위한 어노테이션
-    public BaseResponse<GetStoreCatRes> getUsers() {
+    public BaseResponse<List<GetStoreCatRes>> getStoreCat() {
 
         try {
             // 식당 카테고리 리스트 불러오기
-            GetStoreCatRes getStoreCat = storeProvider.getStoreCat();
+            System.out.println("enter");
+            List<GetStoreCatRes> getStoreCat = storeProvider.getStoreCat();
             return new BaseResponse<>(getStoreCat);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    /**
+     * 골라먹는 맛집 조회 API
+     * [GET] /app/stores/gola
+     */
+    //Query String
+    @ResponseBody   // return되는 자바 객체를 JSON으로 바꿔서 HTTP body에 담는 어노테이션.
+    //  JSON은 HTTP 통신 시, 데이터를 주고받을 때 많이 쓰이는 데이터 포맷.
+    @GetMapping("/gola") // (GET) 127.0.0.1:9000/app/users
+    // GET 방식의 요청을 매핑하기 위한 어노테이션
+    public BaseResponse<List<GetGolaRes>> getStoreGola() {
+
+        try {
+            // 식당 카테고리 리스트 불러오기
+            System.out.println("enter");
+            List<GetGolaRes> getStoreGola = storeProvider.getStoreGola();
+            return new BaseResponse<>(getStoreGola);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
