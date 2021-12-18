@@ -10,9 +10,13 @@ import java.util.List;
 @Setter // 해당 클래스에 대한 설정자 생성
 @AllArgsConstructor
 
-public class Menus {
-    private String category;
-    private List<MenuList> menuLists;
-
-
+public class MenuList {
+    private int menuIdx;
+    private String menuName;
+    private String menuPrice;
+    private String menuDescription;
+    private String menuImage;
+    private String isRec;
+    private String isMuchOrder;
+    private String isBestReview;
 }

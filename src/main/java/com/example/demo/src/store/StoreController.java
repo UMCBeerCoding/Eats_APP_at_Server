@@ -154,9 +154,13 @@ public class StoreController {
     public BaseResponse<GetStoreMenus> getStoreMenus(@PathVariable("storeIdx") int storeIdx) {
 
         try {
+            System.out.println(storeIdx);
             if (storeIdx < 1) return new BaseResponse<>(GET_STORES_STORESIDX_EMPTY);
 
-            GetStoreMenus getStoreMenus = storeProvider.getStoreMenus(storeIdx);
+            int userIdx = jwtService.getUserIdx();
+            System.out.println(userIdx);
+
+            GetStoreMenus getStoreMenus = storeProvider.getStoreMenus(userIdx, storeIdx);
             return new BaseResponse<>(getStoreMenus);
 
 

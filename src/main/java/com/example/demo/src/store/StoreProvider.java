@@ -83,11 +83,11 @@ public class StoreProvider {
         }
     }
 
-    public GetStoreMenus getStoreMenus(int storeIdx) throws BaseException {
+    public GetStoreMenus getStoreMenus(int userIdx, int storeIdx) throws BaseException {
         try {
 
-            GetStoreMenus getStoreMenus = storeDao.getStoreMenus(storeIdx);
-
+            GetStoreMenus getStoreMenus = storeDao.getStoreMenus(userIdx, storeIdx);
+            System.out.println(getStoreMenus.getStoreIdx());
             return getStoreMenus;
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);

@@ -129,8 +129,7 @@ public class StoreDao {
                 "where storeIdx=? limit 1;"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
 
         return this.jdbcTemplate.queryForObject(getUserQuery,
-                (rs, rowNum) -> new String(
-                        rs.getString("image")), storeIdx
+                (rs, rowNum) -> rs.getString("image"), storeIdx
         );
     }
 
@@ -160,14 +159,16 @@ public class StoreDao {
 
 
     // 식당 메뉴
-    public GetStoreMenus getStoreMenus(int storeIdx) {
+    public GetStoreMenus getStoreMenus(int userIdx, int storeIdx) {
         String getUserQuery = "select Store.storeIdx, storeName, truncate((select avg(Review.rating) from Review where Review.storeIdx=Store.storeIdx), 1) as rating,\n" +
                 "       (select count(reviewIdx) from Review where Store.storeIdx=Review.storeIdx) as reviewNum,\n" +
                 "        case when (deliveryPrice=0)\n" +
                 "            then '무료배달'\n" +
                 "            else concat('배달비 ', format(deliveryPrice,0), '원') end as deliveryTip,\n" +
-                "       deliveryTime\n" +
-                "from Store where storeCat=?;";
+                "       deliveryTime,\n" +
+                "       (select case when (select exists(select favIdx from Favorite where userIdx=? and storeIdx=?)=1)\n" +
+                "        then 'T' else 'F' end)\n" +
+                "from Store where storeIdx=?;";
 
         return this.jdbcTemplate.queryForObject(getUserQuery,
                 (rs, rowNum) -> new GetStoreMenus(
@@ -176,30 +177,54 @@ public class StoreDao {
                         rs.getFloat("rating"),
                         rs.getInt("reviewNum"),
                         rs.getString("deliveryTime"),
-                        rs.getString("isHeart"),
-                        getStoreMenuList(rs.getInt("storeIdx")))
+                        getHeartStore(userIdx, storeIdx),
+                        getStoreMenuCat(storeIdx)), userIdx, storeIdx, storeIdx
+        );
+    }
+
+    //  좋아요했는지
+    public String getHeartStore(int userIdx, int storeIdx) {
+        String getUserQuery = "select case when (select exists(select favIdx from Favorite where userIdx=? and storeIdx=?))=1\n" +
+                "then 'T'\n" +
+                "else 'F' end as isHeart";
+
+        return this.jdbcTemplate.queryForObject(getUserQuery,
+                (rs, rowNum) -> rs.getString("isHeart"), userIdx, storeIdx
+        );
+    }
+
+    // 식당 메뉴 카테고리
+    public List<Menus> getStoreMenuCat(int storeIdx) {
+        String getUserQuery = "select menuCatIdx, menCatName as category\n" +
+                "from MenuCat\n" +
+                "where storeIdx = ?;";
+
+        return this.jdbcTemplate.query(getUserQuery,
+                (rs, rowNum) -> new Menus(
+                        rs.getString("category"),
+                        getStoreMenuList(rs.getInt("menuCatIdx"))
+                        ), storeIdx
         );
     }
 
     // 식당 메뉴
-    public List<Menus> getStoreMenuList(int storeIdx) {
-        String getUserQuery = "select Store.storeIdx, storeName, truncate((select avg(Review.rating) from Review where Review.storeIdx=Store.storeIdx), 1) as rating,\n" +
-                "       (select count(reviewIdx) from Review where Store.storeIdx=Review.storeIdx) as reviewNum,\n" +
-                "        case when (deliveryPrice=0)\n" +
-                "            then '무료배달'\n" +
-                "            else concat('배달비 ', format(deliveryPrice,0), '원') end as deliveryTip,\n" +
-                "       deliveryTime\n" +
-                "from Store where storeCat=?;";
+    public List<MenuList> getStoreMenuList(int catIdx) {
+        System.out.println(catIdx);
+        String getUserQuery = "select menuIdx, menuName, concat(format(price, 0),'원') as menuPrice,\n" +
+                "       description as menuDescription, menuImage, isRec, isMuchOrder, isBestReview\n" +
+                "from Menu\n" +
+                "where menuCatIdx=?;";
 
         return this.jdbcTemplate.query(getUserQuery,
-                (rs, rowNum) -> new Menus(
+                (rs, rowNum) -> new MenuList(
                         rs.getInt("menuIdx"),
                         rs.getString("menuName"),
                         rs.getString("menuPrice"),
                         rs.getString("menuDescription"),
                         rs.getString("menuImage"),
+                        rs.getString("isRec"),
                         rs.getString("isMuchOrder"),
-                        rs.getString("isBestReview")), storeIdx
+                        rs.getString("isBestReview")), catIdx
         );
     }
 }
