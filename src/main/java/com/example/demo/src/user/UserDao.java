@@ -141,4 +141,12 @@ public class UserDao {
                         rs.getString("password")), // RowMapper(위의 링크 참조): 원하는 결과값 형태로 받기
                 getUserParams); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
     }
+
+    public int checkUserIdx(int userIdx) {
+        String checkUserIdxQuery = "select exists(select userIdx from User where userIdx = ?)"; // User Table에 해당 email 값을 갖는 유저 정보가 존재하는가?
+        int checkUserIdxParams = userIdx; // 해당(확인할) 이메일 값
+        return this.jdbcTemplate.queryForObject(checkUserIdxQuery,
+                int.class,
+                checkUserIdxParams);
+    }
 }

@@ -33,7 +33,9 @@ public enum BaseResponseStatus {
     POST_USERS_EMTY_PASS(false, 104, "비밀번호를 입력해주세요."),
     POST_USERS_EMTY_PHONE(false, 105, "전화번호를 입력해주세요."),
 
-
+    POST_LIKE_EMPTY_USER(false, 200, "유저 아이디 값을 입력해주세요."),
+    POST_LIKE_EMPTY_STORE(false, 201, "가게 아이디 값을 입력해주세요."),
+    POST_LIKE_INVALID_USER(false, 202, "존재하지 않는 아이디 입니다."),
 
 
     /**
