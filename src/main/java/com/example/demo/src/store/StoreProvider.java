@@ -42,8 +42,10 @@ public class StoreProvider {
 
     public GetStoreCatRes getStoreCat() throws BaseException {
         try {
-            GetStoreCatRes getStoreCat = storeDao.getStoreCat();
-            return getStoreCat;
+            System.out.println("provider");
+            GetStoreCatRes getStoreCatResult = storeDao.getStoreCat();
+            System.out.println(getStoreCatResult.getCatIdx());
+            return getStoreCatResult;
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }

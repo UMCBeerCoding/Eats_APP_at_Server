@@ -62,7 +62,8 @@ public class StoreDao {
                 (rs, rowNum) -> new GetStoreCatRes(
                         rs.getInt("catIdx"),
                         rs.getString("catName"),
-                        rs.getString("catImage"))); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
+                        rs.getString("catImage"))
+        ); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
     }
 
 }
