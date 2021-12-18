@@ -14,5 +14,8 @@ import lombok.Setter;
 public class PostLoginRes {
     private int userIdx;
 //    해당 부분은 7주차 - JWT 수업 후 주석해제 및 대체해주세요!
+    private String email;
+    private String name;
+    private String phoneNum;
     private String jwt;
 }

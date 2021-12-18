@@ -21,5 +21,12 @@
       <jdbc-url>jdbc:mysql://garit-aws-db-dev.chmos8a1sd5b.ap-northeast-2.rds.amazonaws.com:3306/EatsDB</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="EatsDB@garit-aws-db-dev.chmos8a1sd5b.ap-northeast-2.rds.amazonaws.com [3]" uuid="021bd9e5-24f0-4508-87a5-4737657e28c5">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://garit-aws-db-dev.chmos8a1sd5b.ap-northeast-2.rds.amazonaws.com:3306/EatsDB</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

@@ -77,7 +77,7 @@ public class UserController {
         }
         //이메일 정규표현: 입력받은 이메일이 email@domain.xxx와 같은 형식인지 검사합니다. 형식이 올바르지 않다면 에러 메시지를 보냅니다.
         if (!isRegexEmail(postUserReq.getEmail())) {
-            return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
+            return new BaseResponse<>(POST_USERS_INVALID_EMAIL);
         }
 
         try {
@@ -181,7 +181,7 @@ public class UserController {
             //같다면 유저네임 변경
   **************************************************************************
  */
-            PatchUserReq patchUserReq = new PatchUserReq(userIdx, user.getNickname());
+            PatchUserReq patchUserReq = new PatchUserReq(userIdx, user.getName());
             userService.modifyUserName(patchUserReq);
 
             String result = "회원정보가 수정되었습니다.";
