@@ -70,4 +70,16 @@ public class StoreProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public List<GetCatRes> getCatStoreRec(String type) throws BaseException {
+        try {
+            int typeNum = 0;
+            if (type.equals("한식")) typeNum = 1;
+            List<GetCatRes> getCatStoreRec = storeDao.getCatStoreRec(typeNum);
+
+            return getCatStoreRec;
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

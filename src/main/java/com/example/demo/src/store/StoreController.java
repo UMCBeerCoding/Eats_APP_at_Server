@@ -115,4 +115,30 @@ public class StoreController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    /**
+     * 카테고리별 가게 조회 API
+     * [GET] /app/stores/cate?type=
+     */
+    //Query String
+    @ResponseBody   // return되는 자바 객체를 JSON으로 바꿔서 HTTP body에 담는 어노테이션.
+    //  JSON은 HTTP 통신 시, 데이터를 주고받을 때 많이 쓰이는 데이터 포맷.
+    @GetMapping("/cate") // (GET) 127.0.0.1:9000/app/users
+    // GET 방식의 요청을 매핑하기 위한 어노테이션
+    public BaseResponse<List<GetCatRes>> getCatStore(@RequestParam String type) {
+
+        try {
+            if (type.equals("한식")) {
+                System.out.println(type);
+                List<GetCatRes> getCatStoreRec = storeProvider.getCatStoreRec(type);
+                return new BaseResponse<>(getCatStoreRec);
+            }
+            else {
+                return new BaseResponse<>(GET_STORES_REC_TYPE);
+            }
+
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 }
