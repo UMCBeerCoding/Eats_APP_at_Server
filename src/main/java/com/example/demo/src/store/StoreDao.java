@@ -55,15 +55,50 @@ public class StoreDao {
      */
 
     // 해당 userIdx를 갖는 유저조회
-    public GetStoreCatRes getStoreCat() {
+    public List<GetStoreCatRes> getStoreCat() {
         String getUserQuery = "select * from Category"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
 
-        return this.jdbcTemplate.queryForObject(getUserQuery,
+        return this.jdbcTemplate.query(getUserQuery,
                 (rs, rowNum) -> new GetStoreCatRes(
                         rs.getInt("catIdx"),
                         rs.getString("catName"),
                         rs.getString("catImage"))
         ); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
+    }
+
+    // 골라먹는 맛집 조회
+    public List<GetGolaRes> getStoreGola() {
+        String getUserQuery = "select Store.storeIdx, storeName, truncate((select avg(Review.rating) from Review where Review.storeIdx=Store.storeIdx), 1) as rating,\n" +
+                "       (select count(reviewIdx) from Review where Store.storeIdx=Review.storeIdx) as reviewNum,\n" +
+                "        case when (deliveryPrice=0)\n" +
+                "            then '무료배달'\n" +
+                "            else concat('배달비 ', format(deliveryPrice,0), '원') end as deliveryTip,\n" +
+                "       deliveryTime\n" +
+                "from Store;";
+
+        return this.jdbcTemplate.query(getUserQuery,
+                (rs, rowNum) -> new GetGolaRes(
+                        rs.getInt("storeIdx"),
+                        rs.getString("storeName"),
+                        rs.getFloat("rating"),
+                        rs.getInt("reviewNum"),
+                        "2.0km",
+                        rs.getString("deliveryTip"),
+                        rs.getString("deliveryTime"),
+                        getStoreImages(rs.getInt("storeIdx")))
+        ); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
+    }
+
+    // 가게의 사진 가져오기
+    public List<String> getStoreImages(int storeIdx) {
+        String getUserQuery = "select image\n" +
+                "from StoreImg\n" +
+                "where storeIdx=?;"; // 해당 userIdx를 만족하는 유저를 조회하는 쿼리문
+
+        return this.jdbcTemplate.query(getUserQuery,
+                (rs, rowNum) -> new String(
+                        rs.getString("image")), storeIdx
+        );
     }
 
 }

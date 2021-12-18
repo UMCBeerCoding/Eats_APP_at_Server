@@ -40,12 +40,22 @@ public class StoreProvider {
     // ******************************************************************************
 
 
-    public GetStoreCatRes getStoreCat() throws BaseException {
+    public List<GetStoreCatRes> getStoreCat() throws BaseException {
         try {
             System.out.println("provider");
-            GetStoreCatRes getStoreCatResult = storeDao.getStoreCat();
-            System.out.println(getStoreCatResult.getCatIdx());
+            List<GetStoreCatRes> getStoreCatResult = storeDao.getStoreCat();
+
             return getStoreCatResult;
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public List<GetGolaRes> getStoreGola() throws BaseException {
+        try {
+            List<GetGolaRes> getStoreGolaResult = storeDao.getStoreGola();
+
+            return getStoreGolaResult;
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
