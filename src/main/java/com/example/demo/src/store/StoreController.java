@@ -141,4 +141,27 @@ public class StoreController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    /**
+     * 가게 메뉴& 정보 조회 API
+     * [GET] /app/stores/:storeIdx/store
+     */
+    //Query String
+//    @ResponseBody   // return되는 자바 객체를 JSON으로 바꿔서 HTTP body에 담는 어노테이션.
+//    //  JSON은 HTTP 통신 시, 데이터를 주고받을 때 많이 쓰이는 데이터 포맷.
+//    @GetMapping("/{storeIdx}/store") // (GET) 127.0.0.1:9000/app/users
+//    // GET 방식의 요청을 매핑하기 위한 어노테이션
+//    public BaseResponse<GetStoreMenus> getStoreMenus(@PathVariable("storeIdx") int storeIdx) {
+//
+//        try {
+//            if (storeIdx < 1) return new BaseResponse<>(GET_STORES_STORESIDX_EMPTY);
+//
+//            GetStoreMenus getStoreMenus = storeProvider.getStoreMenus(storeIdx);
+//            return new BaseResponse<>(getStoreMenus);
+//
+//
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>((exception.getStatus()));
+//        }
+//    }
 }

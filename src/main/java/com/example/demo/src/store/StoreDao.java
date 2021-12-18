@@ -157,4 +157,50 @@ public class StoreDao {
                         getStoreImages(rs.getInt("storeIdx"))), typeN
         ); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
     }
+
+
+    // 식당 메뉴
+    public GetStoreMenus getStoreMenus(int storeIdx) {
+        String getUserQuery = "select Store.storeIdx, storeName, truncate((select avg(Review.rating) from Review where Review.storeIdx=Store.storeIdx), 1) as rating,\n" +
+                "       (select count(reviewIdx) from Review where Store.storeIdx=Review.storeIdx) as reviewNum,\n" +
+                "        case when (deliveryPrice=0)\n" +
+                "            then '무료배달'\n" +
+                "            else concat('배달비 ', format(deliveryPrice,0), '원') end as deliveryTip,\n" +
+                "       deliveryTime\n" +
+                "from Store where storeCat=?;";
+
+        return this.jdbcTemplate.queryForObject(getUserQuery,
+                (rs, rowNum) -> new GetStoreMenus(
+                        rs.getInt("storeIdx"),
+                        rs.getString("storeName"),
+                        rs.getFloat("rating"),
+                        rs.getInt("reviewNum"),
+                        rs.getString("deliveryTime"),
+                        rs.getString("isHeart"),
+                        getStoreMenuList(rs.getInt("storeIdx")))
+        );
+    }
+
+    // 식당 메뉴
+    public List<GetCatRes> getStoreMenuList(int storeIdx) {
+        String getUserQuery = "select Store.storeIdx, storeName, truncate((select avg(Review.rating) from Review where Review.storeIdx=Store.storeIdx), 1) as rating,\n" +
+                "       (select count(reviewIdx) from Review where Store.storeIdx=Review.storeIdx) as reviewNum,\n" +
+                "        case when (deliveryPrice=0)\n" +
+                "            then '무료배달'\n" +
+                "            else concat('배달비 ', format(deliveryPrice,0), '원') end as deliveryTip,\n" +
+                "       deliveryTime\n" +
+                "from Store where storeCat=?;";
+
+        return this.jdbcTemplate.query(getUserQuery,
+                (rs, rowNum) -> new GetCatRes(
+                        rs.getInt("storeIdx"),
+                        rs.getString("storeName"),
+                        rs.getFloat("rating"),
+                        rs.getInt("reviewNum"),
+                        "2.0km",
+                        rs.getString("deliveryTip"),
+                        rs.getString("deliveryTime"),
+                        getStoreImages(rs.getInt("storeIdx"))), typeN
+        ); // 한 개의 회원정보를 얻기 위한 jdbcTemplate 함수(Query, 객체 매핑 정보, Params)의 결과 반환
+    }
 }
