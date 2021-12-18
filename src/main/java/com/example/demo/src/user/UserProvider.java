@@ -5,6 +5,7 @@ import com.example.demo.config.secret.Secret;
 import com.example.demo.src.user.model.*;
 import com.example.demo.utils.AES128;
 import com.example.demo.utils.JwtService;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,16 @@ public class UserProvider {
         try {
             return userDao.checkEmail(email);
         } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public int checkUserIdx(int userIdx) throws BaseException{
+        try{
+            System.out.println("프로바이더");
+            return userDao.checkUserIdx(userIdx);
+        }
+        catch (Exception exception){
             throw new BaseException(DATABASE_ERROR);
         }
     }
