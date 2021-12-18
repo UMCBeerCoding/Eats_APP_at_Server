@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="test@forclass.c8ydsrovkrwj.ap-northeast-2.rds.amazonaws.com" uuid="c03aad89-fb79-4133-ac46-eae3a9c78723">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://forclass.c8ydsrovkrwj.ap-northeast-2.rds.amazonaws.com:3306/test</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="EatsDB@garit-aws-db-dev.chmos8a1sd5b.ap-northeast-2.rds.amazonaws.com" uuid="abe2d730-be52-4407-933f-dfbae995779e">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://garit-aws-db-dev.chmos8a1sd5b.ap-northeast-2.rds.amazonaws.com:3306/EatsDB</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="EatsDB@garit-aws-db-dev.chmos8a1sd5b.ap-northeast-2.rds.amazonaws.com [2]" uuid="dad0b747-3fe9-4874-991d-c8a33c32f4a5">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://garit-aws-db-dev.chmos8a1sd5b.ap-northeast-2.rds.amazonaws.com:3306/EatsDB</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>
